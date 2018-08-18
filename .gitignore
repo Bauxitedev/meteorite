@@ -1,6 +1,7 @@
  
 .import
-promo
+promo/*.*
+*.xcf
 bin
 *.blend
 *.blend1

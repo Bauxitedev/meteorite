@@ -1,5 +1,10 @@
 # Meteorite
+
+![](promo/crop/screenshot0.png)
+
 **Meteorite is a lowres metroidvania FPS, inspired by Metroid Prime, made for LOWREZJAM 2018.** Explore a facility on a far away planet, find gun upgrades, and upgrade your movement capabilities to surpass previously unsurmountable obstacles.
+
+![](promo/crop/screenshot1.png) ![](promo/crop/screenshot2.png) ![](promo/crop/screenshot3.png) ![](promo/crop/screenshot4.png) ![](promo/crop/screenshot5.png) ![](promo/crop/screenshot6.png) 
 
 Your combative skills and self-defense will be tested by numerous turrets and a giant floating eyeball boss that shoots purple laser beams.
 
