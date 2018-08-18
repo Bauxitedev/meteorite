@@ -1,0 +1,444 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://scripts/player.gd" type="Script" id=1]
+[ext_resource path="res://scenes/guns/gun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/ui/player/health.gd" type="Script" id=3]
+[ext_resource path="res://textures/ui/plus.png" type="Texture" id=4]
+[ext_resource path="res://scripts/player/countdown.gd" type="Script" id=5]
+[ext_resource path="res://fonts/main_font.tres" type="BitmapFont" id=6]
+[ext_resource path="res://scenes/fsm/fsm.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scripts/player/states/rest.gd" type="Script" id=8]
+[ext_resource path="res://scripts/player/states/dead.gd" type="Script" id=9]
+[ext_resource path="res://scripts/player/states/boost.gd" type="Script" id=10]
+
+[sub_resource type="CapsuleShape" id=1]
+
+radius = 0.49
+height = 0.99
+
+[sub_resource type="CanvasItemMaterial" id=2]
+
+render_priority = 0
+blend_mode = 0
+light_mode = 0
+
+[sub_resource type="StyleBoxFlat" id=3]
+
+resource_local_to_scene = true
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.161362, 0.609827, 0.878906, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 1
+border_width_bottom = 0
+border_color = Color( 0.582031, 0.566116, 0.566116, 1 )
+border_blend = true
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+_sections_unfolded = [ "Anti Aliasing", "Border", "Border Width", "Corner Radius", "Expand Margin", "Resource", "Shadow" ]
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.398438, 0.398438, 0.398438, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[sub_resource type="BitmapFont" id=5]
+
+textures = [  ]
+chars = PoolIntArray(  )
+kernings = PoolIntArray(  )
+height = 1.0
+ascent = 0.0
+distance_field = false
+
+[sub_resource type="StyleBoxFlat" id=6]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 1, 1, 1, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[sub_resource type="StyleBoxFlat" id=7]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0, 0, 0, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[node name="player" type="KinematicBody" index="0" groups=[
+"player",
+]]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 2
+collision_mask = 2
+axis_lock_linear_x = false
+axis_lock_linear_y = false
+axis_lock_linear_z = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+collision/safe_margin = 0.01
+script = ExtResource( 1 )
+_sections_unfolded = [ "Axis Lock", "Collision", "Transform", "collision" ]
+
+[node name="shape" type="CollisionShape" parent="." index="0"]
+
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+disabled = false
+_sections_unfolded = [ "Transform" ]
+
+[node name="cam" type="Camera" parent="." index="1"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.641781, 0 )
+keep_aspect = 1
+cull_mask = 1048575
+environment = null
+h_offset = 0.0
+v_offset = 0.0
+doppler_tracking = 0
+projection = 0
+current = false
+fov = 90.0
+size = 1.0
+near = 0.05
+far = 100.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="gun_container" type="Spatial" parent="cam" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.15, 0.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="gun" parent="cam/gun_container" index="0" instance=ExtResource( 2 )]
+
+transform = Transform( -0.1, 0, -3.25841e-08, 0, 0.1, 0, 3.25841e-08, 0, -0.1, 0, 0, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="tween" type="Tween" parent="." index="2"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="ui" type="CanvasLayer" parent="." index="3"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="health" type="Node2D" parent="ui" index="0"]
+
+modulate = Color( 1, 1, 1, 0.442 )
+script = ExtResource( 3 )
+_sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="bar" type="ProgressBar" parent="ui/health" index="0"]
+
+material = SubResource( 2 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 4.0
+margin_right = -16.0
+margin_bottom = 5.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 0
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 24.0
+exp_edit = false
+rounded = false
+percent_visible = true
+_sections_unfolded = [ "Anchor", "Margin", "Material", "Rect", "Theme", "Visibility", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="plus" type="Sprite" parent="ui/health" index="1"]
+
+modulate = Color( 0.324219, 0.324219, 0.324219, 1 )
+position = Vector2( 12, 3 )
+texture = ExtResource( 4 )
+centered = false
+_sections_unfolded = [ "Offset", "Visibility" ]
+
+[node name="tween" type="Tween" parent="ui/health" index="2"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
+
+[node name="countdown" type="Node2D" parent="ui" index="1"]
+
+script = ExtResource( 5 )
+
+[node name="time" type="Label" parent="ui/countdown" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 6 )
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="timer" type="Timer" parent="ui/countdown" index="1"]
+
+process_mode = 1
+wait_time = 60.0
+one_shot = true
+autostart = false
+
+[node name="flash" type="Panel" parent="ui" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = SubResource( 6 )
+_sections_unfolded = [ "Anchor", "Mouse", "Visibility", "custom_styles" ]
+
+[node name="loading" type="Panel" parent="ui" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = SubResource( 7 )
+_sections_unfolded = [ "Theme", "custom_styles" ]
+
+[node name="label" type="Label" parent="ui/loading" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 6 )
+text = "Loading..."
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="body_state" parent="." index="4" instance=ExtResource( 7 )]
+
+[node name="rest" type="Node" parent="body_state" index="0"]
+
+script = ExtResource( 8 )
+
+[node name="footstep_timer" type="Timer" parent="body_state/rest" index="0"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[node name="footstep_land_timer" type="Timer" parent="body_state/rest" index="1"]
+
+process_mode = 1
+wait_time = 0.5
+one_shot = true
+autostart = false
+
+[node name="dead" type="Node" parent="body_state" index="1"]
+
+script = ExtResource( 9 )
+
+[node name="timer" type="Timer" parent="body_state/dead" index="0"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
+[node name="tween" type="Tween" parent="body_state/dead" index="1"]
+
+repeat = false
+playback_process_mode = 0
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="boost" type="Node" parent="body_state" index="2"]
+
+script = ExtResource( 10 )
+
+[node name="timer" type="Timer" parent="body_state/boost" index="0"]
+
+process_mode = 1
+wait_time = 1.5
+one_shot = true
+autostart = false
+
+[node name="boss_warning_timer" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 180.0
+one_shot = false
+autostart = true
+
+[node name="escape_warning_timer" type="Timer" parent="." index="6"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[node name="hit_sound_timer" type="Timer" parent="." index="7"]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = true
+autostart = false
+
+[node name="tutorial_timer" type="Timer" parent="." index="8"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="ui/countdown/timer" to="." method="_on_countdown_timer_timeout"]
+
+[connection signal="timeout" from="body_state/rest/footstep_timer" to="body_state/rest" method="_on_footstep_timer_timeout"]
+
+[connection signal="timeout" from="boss_warning_timer" to="." method="_on_boss_warning_timer_timeout"]
+
+[connection signal="timeout" from="escape_warning_timer" to="." method="_on_escape_warning_timer_timeout"]
+
+[connection signal="timeout" from="tutorial_timer" to="." method="_on_tutorial_timer_timeout"]
+
+

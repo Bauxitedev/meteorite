@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/shoot_red.wav-8802b9ac1539d5a91dc476170428ea1b.sample"
+
+[deps]
+
+source_file="res://sounds/shoot_red.wav"
+dest_files=[ "res://.import/shoot_red.wav-8802b9ac1539d5a91dc476170428ea1b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/fx/FX.gd" type="Script" id=1]
+[ext_resource path="res://scenes/fx/effects/boss_explosion.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/fx/effects/turret_explosion.tscn" type="PackedScene" id=3]
+
+[node name="FX" type="Node" index="0"]
+
+script = ExtResource( 1 )
+
+[node name="boss_explosion" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="turret_explosion" parent="." index="1" instance=ExtResource( 3 )]
+
+

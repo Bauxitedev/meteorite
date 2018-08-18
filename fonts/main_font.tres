@@ -1,0 +1,14 @@
+[gd_resource type="BitmapFont" load_steps=2 format=2]
+
+[ext_resource path="res://fonts/bitmap/font.fnt" type="BitmapFont" id=1]
+
+[resource]
+
+textures = [  ]
+chars = PoolIntArray(  )
+kernings = PoolIntArray(  )
+height = 12.0
+ascent = 9.0
+distance_field = false
+fallback = ExtResource( 1 )
+

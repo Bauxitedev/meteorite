@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/ui/main_menu/menu_item.gd" type="Script" id=1]
+
+[node name="menu_item" type="Node" index="0"]
+
+script = ExtResource( 1 )
+item_name = "???"
+item_type = null
+
+

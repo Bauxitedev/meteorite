@@ -1,0 +1,353 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://scripts/ui/main_menu/main_menu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/fsm/fsm.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/ui/main_menu/main_menu_state.gd" type="Script" id=3]
+[ext_resource path="res://scenes/ui/main_menu/menu_item.tscn" type="PackedScene" id=4]
+[ext_resource path="res://textures/ui/arrow_left.png" type="Texture" id=5]
+[ext_resource path="res://textures/ui/arrow_right.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0, 0, 0, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "fade"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+render_priority = 0
+blend_mode = 1
+light_mode = 0
+
+[sub_resource type="Gradient" id=4]
+
+offsets = PoolRealArray( 0, 0.552632, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.552632, 0.552632, 0.552632, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+
+flags = 4
+gradient = SubResource( 4 )
+width = 2048
+
+[sub_resource type="ParticlesMaterial" id=6]
+
+render_priority = 0
+trail_divisor = 1
+emission_shape = 2
+emission_box_extents = Vector3( 200, 30, 1 )
+flag_align_y = false
+flag_rotate_y = false
+flag_disable_z = true
+spread = 180.0
+flatness = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 0.0
+angular_velocity = 1.0
+angular_velocity_random = 0.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 0.0
+linear_accel_random = 0.0
+radial_accel = 0.0
+radial_accel_random = 0.0
+tangential_accel = 0.0
+tangential_accel_random = 0.0
+damping = 0.0
+damping_random = 0.0
+angle = 0.0
+angle_random = 0.0
+scale = 1.0
+scale_random = 0.0
+color_ramp = SubResource( 5 )
+hue_variation = 0.0
+hue_variation_random = 0.0
+anim_speed = 0.0
+anim_speed_random = 0.0
+anim_offset = 0.0
+anim_offset_random = 0.0
+anim_loop = false
+_sections_unfolded = [ "Color", "Emission Shape", "Gravity", "Hue Variation", "Spread" ]
+
+[node name="main_menu" type="Node2D" index="0"]
+
+pause_mode = 2
+script = ExtResource( 1 )
+_sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z Index" ]
+
+[node name="cam" type="Camera2D" parent="." index="0"]
+
+position = Vector2( 32, 32 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+smoothing_enabled = true
+smoothing_speed = 15.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Drag Margin", "Editor", "Limit", "Offset", "Smoothing", "Transform", "Visibility", "Z Index" ]
+
+[node name="menu_state" parent="." index="1" instance=ExtResource( 2 )]
+
+[node name="main" type="Node" parent="menu_state" index="0"]
+
+script = ExtResource( 3 )
+
+[node name="play" parent="menu_state/main" index="0" instance=ExtResource( 4 )]
+
+item_name = "Play"
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.1
+config_property_name = "TODO"
+
+[node name="options" parent="menu_state/main" index="1" instance=ExtResource( 4 )]
+
+item_name = "Options"
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.1
+config_property_name = "TODO"
+
+[node name="quit" parent="menu_state/main" index="2" instance=ExtResource( 4 )]
+
+item_name = "Quit"
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.1
+config_property_name = "TODO"
+
+[node name="play" type="Node" parent="menu_state" index="1"]
+
+script = ExtResource( 3 )
+
+[node name="continue" parent="menu_state/play" index="0" instance=ExtResource( 4 )]
+
+item_name = "Continue"
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.1
+config_property_name = "TODO"
+
+[node name="new_game" parent="menu_state/play" index="1" instance=ExtResource( 4 )]
+
+item_name = "New game"
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.1
+config_property_name = "TODO"
+
+[node name="options" type="Node" parent="menu_state" index="2"]
+
+script = ExtResource( 3 )
+
+[node name="mouse_sensitivity" parent="menu_state/options" index="0" instance=ExtResource( 4 )]
+
+item_name = "Mouse sensitivity"
+item_type = 1
+slider_min = 0.002
+slider_max = 0.05
+slider_step = 0.002
+config_property_name = "mouse_sensitivity"
+
+[node name="sfx_volume" parent="menu_state/options" index="1" instance=ExtResource( 4 )]
+
+item_name = "SFX volume"
+item_type = 1
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.05
+config_property_name = "sfx_volume"
+
+[node name="music_volume" parent="menu_state/options" index="2" instance=ExtResource( 4 )]
+
+item_name = "Music volume"
+item_type = 1
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.05
+config_property_name = "music_volume"
+
+[node name="fullscreen" parent="menu_state/options" index="3" instance=ExtResource( 4 )]
+
+item_name = "Fullscreen"
+item_type = 2
+slider_min = 0.0
+slider_max = 1.0
+slider_step = 0.05
+config_property_name = "fullscreen"
+
+[node name="menu_item_texts" type="Node2D" parent="." index="2"]
+
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="layer" type="CanvasLayer" parent="." index="3"]
+
+layer = 2
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="hbox" type="HBoxContainer" parent="layer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 45
+alignment = 0
+_sections_unfolded = [ "Material", "Mouse", "Size Flags", "Theme", "Visibility", "custom_constants" ]
+
+[node name="left" type="TextureRect" parent="layer/hbox" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 9.0
+margin_bottom = 64.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+texture = ExtResource( 5 )
+stretch_mode = 4
+_sections_unfolded = [ "Focus", "Material", "Mouse", "Size Flags", "Visibility" ]
+
+[node name="right" type="TextureRect" parent="layer/hbox" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 54.0
+margin_right = 64.0
+margin_bottom = 64.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+texture = ExtResource( 6 )
+stretch_mode = 4
+_sections_unfolded = [ "Anchor", "Hint", "Margin", "Material", "Mouse", "Size Flags", "Theme", "Visibility" ]
+
+[node name="fade" type="Panel" parent="layer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = SubResource( 1 )
+_sections_unfolded = [ "Mouse", "Theme", "Visibility", "custom_styles" ]
+
+[node name="animation" type="AnimationPlayer" parent="layer/fade" index="0"]
+
+root_node = NodePath("..")
+autoplay = "fade"
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/fade = SubResource( 2 )
+blend_times = [  ]
+
+[node name="Particles2D" type="Particles2D" parent="." index="4"]
+
+modulate = Color( 0.417969, 0.385315, 0.385315, 1 )
+material = SubResource( 3 )
+position = Vector2( 488.074, 0 )
+scale = Vector2( 4, 4 )
+emitting = true
+amount = 800
+lifetime = 4.0
+one_shot = false
+preprocess = 50.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -1000, -1000, 2000, 2000 )
+local_coords = true
+draw_order = 0
+process_material = SubResource( 6 )
+texture = null
+normal_map = null
+h_frames = 1
+v_frames = 1
+_sections_unfolded = [ "Drawing", "Material", "Process Material", "Time", "Transform", "Visibility" ]
+
+

@@ -1,0 +1,138 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/environmental/ufo.dae" type="PackedScene" id=1]
+[ext_resource path="res://scripts/environmental/ufo.gd" type="Script" id=2]
+[ext_resource path="res://materials/shaders/volumetric_cylinder_base.shader" type="Shader" id=3]
+
+[sub_resource type="CylinderMesh" id=1]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+top_radius = 2.0
+bottom_radius = 0.4
+height = 3.0
+radial_segments = 64
+rings = 4
+
+[sub_resource type="ShaderMaterial" id=2]
+
+render_priority = 0
+shader = ExtResource( 3 )
+shader_param/col = Color( 0.115234, 0.77063, 0.921875, 1 )
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="SphereShape" id=3]
+
+radius = 3.0
+
+[sub_resource type="CapsuleShape" id=4]
+
+radius = 1.5
+height = 3.0
+
+[sub_resource type="BoxShape" id=5]
+
+extents = Vector3( 1.5, 1, 1.5 )
+
+[node name="ufo" index="0" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="glow" type="MeshInstance" parent="." index="2"]
+
+transform = Transform( 2, -3.01992e-07, -3.01992e-07, -3.01992e-07, -2, 6.51683e-07, -3.01992e-07, -6.51683e-07, -2, 0, -2.73903, 0 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = SubResource( 2 )
+_sections_unfolded = [ "Transform", "material" ]
+
+[node name="StaticBody" type="StaticBody" parent="." index="3"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.87792, 0 )
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 0
+collision_mask = 2
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+
+shape = SubResource( 3 )
+disabled = false
+
+[node name="player_collect_area" type="Area" parent="." index="4"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.20395, 0 )
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 0
+collision_mask = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape" type="CollisionShape" parent="player_collect_area" index="0"]
+
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 4 )
+disabled = false
+_sections_unfolded = [ "Transform" ]
+
+[node name="player_win_area" type="Area" parent="." index="5"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.400294, 0 )
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 0
+collision_mask = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape" type="CollisionShape" parent="player_win_area" index="0"]
+
+shape = SubResource( 5 )
+disabled = false
+_sections_unfolded = [ "Transform" ]
+
+

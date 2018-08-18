@@ -1,0 +1,132 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/guns/bullet.gd" type="Script" id=1]
+[ext_resource path="res://textures/fx/glow.png" type="Texture" id=2]
+
+[sub_resource type="QuadMesh" id=1]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+size = Vector2( 0.3, 0.3 )
+
+[sub_resource type="SpatialMaterial" id=2]
+
+resource_local_to_scene = true
+render_priority = 0
+flags_transparent = false
+flags_unshaded = true
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 1
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 1
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 3, 3, 3, 1 )
+albedo_texture = ExtResource( 2 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Flags", "Metallic", "Parameters", "Resource", "Vertex Color" ]
+
+[node name="bullet" type="Spatial" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="light" type="OmniLight" parent="." index="0"]
+
+layers = 1
+light_color = Color( 1, 1, 1, 1 )
+light_energy = 3.0
+light_indirect_energy = 1.0
+light_negative = false
+light_specular = 0.5
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.15
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+omni_range = 5.0
+omni_attenuation = 3.24901
+omni_shadow_mode = 1
+omni_shadow_detail = 1
+_sections_unfolded = [ "Light", "Omni", "Shadow" ]
+
+[node name="glow" type="MeshInstance" parent="." index="1"]
+
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = SubResource( 2 )
+_sections_unfolded = [ "material" ]
+
+[node name="timer" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="raycast" type="RayCast" parent="." index="3"]
+
+enabled = true
+exclude_parent = false
+cast_to = Vector3( 0, 0, 0 )
+collision_mask = 5
+_sections_unfolded = [ "Visibility" ]
+
+[node name="timer_ricochet_sound" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+
+

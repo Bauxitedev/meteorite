@@ -1,0 +1,100 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://scripts/music/Music.gd" type="Script" id=1]
+[ext_resource path="res://music/meteorite.ogg" type="AudioStream" id=2]
+[ext_resource path="res://music/boss.ogg" type="AudioStream" id=3]
+[ext_resource path="res://music/escape.ogg" type="AudioStream" id=4]
+[ext_resource path="res://music/silence.ogg" type="AudioStream" id=5]
+[ext_resource path="res://music/credits.ogg" type="AudioStream" id=6]
+[ext_resource path="res://music/menu.ogg" type="AudioStream" id=7]
+[ext_resource path="res://scenes/fsm/fsm.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scripts/music/states/stopped.gd" type="Script" id=9]
+[ext_resource path="res://scripts/music/states/playing.gd" type="Script" id=10]
+[ext_resource path="res://scripts/music/states/crossfading.gd" type="Script" id=11]
+
+[node name="Music" type="Node" index="0"]
+
+pause_mode = 2
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
+
+[node name="songs" type="Node" parent="." index="0"]
+
+[node name="meteorite" type="AudioStreamPlayer" parent="songs" index="0"]
+
+stream = ExtResource( 2 )
+volume_db = -80.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Music"
+
+[node name="boss" type="AudioStreamPlayer" parent="songs" index="1"]
+
+stream = ExtResource( 3 )
+volume_db = -80.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Music"
+
+[node name="escape" type="AudioStreamPlayer" parent="songs" index="2"]
+
+stream = ExtResource( 4 )
+volume_db = -80.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Music"
+
+[node name="silence" type="AudioStreamPlayer" parent="songs" index="3"]
+
+stream = ExtResource( 5 )
+volume_db = -80.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Music"
+
+[node name="credits" type="AudioStreamPlayer" parent="songs" index="4"]
+
+stream = ExtResource( 6 )
+volume_db = -80.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Music"
+
+[node name="menu" type="AudioStreamPlayer" parent="songs" index="5"]
+
+stream = ExtResource( 7 )
+volume_db = -80.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Music"
+
+[node name="music_state" parent="." index="1" instance=ExtResource( 8 )]
+
+[node name="stopped" type="Node" parent="music_state" index="0"]
+
+script = ExtResource( 9 )
+
+[node name="playing" type="Node" parent="music_state" index="1"]
+
+script = ExtResource( 10 )
+
+[node name="crossfading" type="Node" parent="music_state" index="2"]
+
+script = ExtResource( 11 )
+
+[node name="tween" type="Tween" parent="." index="2"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+

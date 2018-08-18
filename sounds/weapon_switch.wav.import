@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/weapon_switch.wav-9d3352ca3702c912fbcf4a71e937ef94.sample"
+
+[deps]
+
+source_file="res://sounds/weapon_switch.wav"
+dest_files=[ "res://.import/weapon_switch.wav-9d3352ca3702c912fbcf4a71e937ef94.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

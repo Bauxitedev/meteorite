@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/singletons/Dialogs.gd" type="Script" id=1]
+
+[node name="Dialogs" type="CanvasLayer" index="0"]
+
+layer = 3
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 1 )
+
+

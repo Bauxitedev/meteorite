@@ -1,0 +1,245 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://scripts/ui/dialogue/dialogue.gd" type="Script" id=1]
+[ext_resource path="res://fonts/main_font.tres" type="BitmapFont" id=2]
+[ext_resource path="res://scenes/fsm/fsm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/ui/dialogue/states/appearing.gd" type="Script" id=4]
+[ext_resource path="res://scripts/ui/dialogue/states/writing.gd" type="Script" id=5]
+[ext_resource path="res://scripts/ui/dialogue/states/written.gd" type="Script" id=6]
+[ext_resource path="res://scripts/ui/dialogue/states/disappearing.gd" type="Script" id=7]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+
+uniform float fade_amount;
+
+void fragment()
+{
+	COLOR.rgb = textureLod(SCREEN_TEXTURE, SCREEN_UV, 1.0 * fade_amount).rgb * (1.0 - fade_amount * 0.4);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+
+render_priority = 0
+shader = SubResource( 1 )
+shader_param/fade_amount = null
+
+[sub_resource type="StyleBoxFlat" id=3]
+
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color( 0, 0, 0, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.929688, 0.188843, 0.188843, 1 )
+border_blend = true
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+_sections_unfolded = [ "Border", "Border Width", "Content Margin", "Corner Radius", "Shadow" ]
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+content_margin_left = 0.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+bg_color = Color( 0, 0, 0, 0.403294 )
+draw_center = false
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0, 0, 0, 0 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.0828627 )
+shadow_size = 15
+anti_aliasing = true
+anti_aliasing_size = 1
+_sections_unfolded = [ "Anti Aliasing", "Border", "Border Width", "Content Margin", "Corner Radius", "Expand Margin", "Shadow" ]
+
+[node name="dialogue" type="PanelContainer" index="0"]
+
+pause_mode = 2
+material = SubResource( 2 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = SubResource( 3 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Anchor", "Grow Direction", "Hint", "Margin", "Material", "Pause", "Rect", "Visibility", "custom_styles" ]
+
+[node name="faders" type="Control" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 62.0
+margin_bottom = 62.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="fancy_borders" type="Panel" parent="faders" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 60.0
+margin_bottom = 60.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = SubResource( 4 )
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material", "Mouse", "Rect", "Size Flags", "Theme", "Visibility", "custom_styles" ]
+
+[node name="label" type="Label" parent="faders" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 7
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.265176 )
+custom_constants/shadow_offset_x = 0
+custom_constants/line_spacing = -3
+custom_constants/shadow_offset_y = 0
+text = "this is some test text"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Margin", "Size Flags", "Theme", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+
+[node name="button" type="TextureButton" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 62.0
+margin_bottom = 62.0
+rect_min_size = Vector2( 0, 5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+expand = true
+stretch_mode = 5
+_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Textures", "Theme", "custom_fonts", "custom_styles" ]
+
+[node name="diag_state" parent="." index="2" instance=ExtResource( 3 )]
+
+[node name="appearing" type="Node" parent="diag_state" index="0"]
+
+script = ExtResource( 4 )
+
+[node name="tween" type="Tween" parent="diag_state/appearing" index="0"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="writing" type="Node" parent="diag_state" index="1"]
+
+script = ExtResource( 5 )
+
+[node name="written" type="Node" parent="diag_state" index="2"]
+
+script = ExtResource( 6 )
+
+[node name="timer" type="Timer" parent="diag_state/written" index="0"]
+
+process_mode = 1
+wait_time = 14.0
+one_shot = false
+autostart = false
+
+[node name="disappearing" type="Node" parent="diag_state" index="3"]
+
+script = ExtResource( 7 )
+
+[node name="tween" type="Tween" parent="diag_state/disappearing" index="0"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
+
+[connection signal="pressed" from="button" to="." method="_on_Button_pressed"]
+
+[connection signal="tween_completed" from="diag_state/appearing/tween" to="diag_state/appearing" method="_on_tween_tween_completed"]
+
+[connection signal="tween_completed" from="diag_state/disappearing/tween" to="diag_state/disappearing" method="_on_tween_tween_completed"]
+
+

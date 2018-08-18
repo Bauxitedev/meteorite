@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/turret_alert.wav-ad724db6a94695b08a0f53b3ffaf9bac.sample"
+
+[deps]
+
+source_file="res://sounds/turret_alert.wav"
+dest_files=[ "res://.import/turret_alert.wav-ad724db6a94695b08a0f53b3ffaf9bac.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

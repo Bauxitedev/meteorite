@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/red_explode.wav-e958991138190221a62f8a855f7fef09.sample"
+
+[deps]
+
+source_file="res://sounds/red_explode.wav"
+dest_files=[ "res://.import/red_explode.wav-e958991138190221a62f8a855f7fef09.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

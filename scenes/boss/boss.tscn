@@ -1,0 +1,988 @@
+[gd_scene load_steps=40 format=2]
+
+[ext_resource path="res://scripts/boss/boss.gd" type="Script" id=1]
+[ext_resource path="res://scenes/fsm/fsm.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/boss/states/inactive.gd" type="Script" id=3]
+[ext_resource path="res://scripts/boss/states/starting.gd" type="Script" id=4]
+[ext_resource path="res://scripts/boss/states/idle.gd" type="Script" id=5]
+[ext_resource path="res://scripts/boss/states/laser.gd" type="Script" id=6]
+[ext_resource path="res://scripts/boss/states/tumors.gd" type="Script" id=7]
+[ext_resource path="res://scripts/boss/states/shooting.gd" type="Script" id=8]
+[ext_resource path="res://scripts/boss/states/dying.gd" type="Script" id=9]
+[ext_resource path="res://textures/boss/eye.png" type="Texture" id=10]
+[ext_resource path="res://scripts/ui/boss/health.gd" type="Script" id=11]
+[ext_resource path="res://textures/fx/glow.png" type="Texture" id=12]
+[ext_resource path="res://sounds/boss_laser_loop.wav" type="AudioStream" id=13]
+
+[sub_resource type="SphereShape" id=1]
+
+radius = 4.0
+
+[sub_resource type="SphereMesh" id=2]
+
+resource_local_to_scene = true
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+radius = 4.0
+height = 8.0
+radial_segments = 64
+rings = 32
+is_hemisphere = false
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="SpatialMaterial" id=3]
+
+resource_local_to_scene = true
+render_priority = 0
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 2
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 1, 1, 1, 1 )
+metallic = 0.9
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.4
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = true
+detail_blend_mode = 0
+detail_uv_layer = 0
+detail_albedo = ExtResource( 10 )
+uv1_scale = Vector3( 20, 20, 20 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Detail", "Flags", "Metallic", "Parameters", "Resource", "Roughness", "UV1" ]
+
+[sub_resource type="Animation" id=4]
+
+resource_name = "dying"
+length = 5.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("mesh:material/0:uv1_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2.9, 4.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.5, 0.5, 0.5 ), Vector3( 4, 4, 4 ), Vector3( 50, 50, 50 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("mesh:material/0:albedo_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2.1, 4.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.835938, 0.0848999, 0.0848999, 1 ), Color( 6, 4, 0.0848999, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+
+resource_name = "laser_end"
+length = 3.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("mesh:material/0:uv1_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.0999999, 1, 1.9, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 4, 4, 4 ), Vector3( 3, 3, 3 ), Vector3( 8, 8, 8 ), Vector3( 4, 4, 4 ), Vector3( 4, 4, 4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("laser/glow:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.01, 0.01, 0.01 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("laser/mesh:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("laser/hit_effect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=6]
+
+resource_name = "laser_start"
+length = 3.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("mesh:material/0:uv1_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 1.9, 2, 2.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 4, 4, 4 ), Vector3( 3, 3, 3 ), Vector3( 8, 8, 8 ), Vector3( 4, 4, 4 ), Vector3( 4, 4, 4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("laser/glow:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.9, 2, 2.3, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.01, 0.01, 0.01 ), Vector3( 0.3, 0.3, 0.3 ), Vector3( 2, 2, 2 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("laser/mesh:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("laser/hit_effect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=7]
+
+length = 4.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("mesh:material/0:uv1_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1, 1.8, 2.8, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 50, 50, 50 ), Vector3( 3, 3, 3 ), Vector3( 4, 4, 4 ), Vector3( 6, 6, 6 ), Vector3( 4, 4, 4 ), Vector3( 4, 4, 4 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+
+length = 2.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("mesh:material/0:uv1_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.2, 0.2, 0.2 ), Vector3( 0.2, 0.2, 0.2 ), Vector3( 4, 4, 4 ), Vector3( 4, 4, 4 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+
+length = 2.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("mesh:material/0:uv1_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 4, 4, 4 ), Vector3( 0.2, 0.2, 0.2 ), Vector3( 0.2, 0.2, 0.2 ) ]
+}
+
+[sub_resource type="CanvasItemMaterial" id=10]
+
+resource_local_to_scene = true
+render_priority = 0
+blend_mode = 0
+light_mode = 0
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="StyleBoxFlat" id=11]
+
+resource_local_to_scene = true
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.721943, 0.161362, 0.878906, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 1
+border_width_bottom = 0
+border_color = Color( 0.582031, 0.566116, 0.566116, 1 )
+border_blend = true
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+_sections_unfolded = [ "Anti Aliasing", "Border", "Border Width", "Corner Radius", "Expand Margin", "Resource", "Shadow" ]
+
+[sub_resource type="StyleBoxFlat" id=12]
+
+resource_local_to_scene = true
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.398438, 0.398438, 0.398438, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="BitmapFont" id=13]
+
+textures = [  ]
+chars = PoolIntArray(  )
+kernings = PoolIntArray(  )
+height = 1.0
+ascent = 0.0
+distance_field = false
+
+[sub_resource type="CylinderMesh" id=14]
+
+resource_local_to_scene = true
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+top_radius = 0.07
+bottom_radius = 0.07
+height = 16.0
+radial_segments = 64
+rings = 4
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="SpatialMaterial" id=15]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = true
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 3, 1.6, 4, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Flags" ]
+
+[sub_resource type="SphereMesh" id=16]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+radius = 0.125
+height = 0.25
+radial_segments = 64
+rings = 32
+is_hemisphere = false
+
+[sub_resource type="SpatialMaterial" id=17]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = true
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 1
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 2, 1.2, 1.8, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Emission", "Flags", "Parameters", "Vertex Color" ]
+
+[sub_resource type="Gradient" id=24]
+
+offsets = PoolRealArray( 0, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=23]
+
+flags = 4
+gradient = SubResource( 24 )
+width = 2048
+
+[sub_resource type="Curve" id=25]
+
+min_value = 0.0
+max_value = 1.0
+bake_resolution = 100
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.0137125, 0.972656 ), 0.0, 0.0, 0, 0, Vector2( 0.98801, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=26]
+
+flags = 4
+width = 2048
+curve = SubResource( 25 )
+
+[sub_resource type="ParticlesMaterial" id=20]
+
+render_priority = 0
+trail_divisor = 1
+emission_shape = 0
+flag_align_y = true
+flag_rotate_y = false
+flag_disable_z = false
+spread = 180.0
+flatness = 0.0
+gravity = Vector3( 0, -9.8, 0 )
+initial_velocity = 7.0
+initial_velocity_random = 0.5
+angular_velocity = 0.0
+angular_velocity_random = 0.0
+linear_accel = 0.0
+linear_accel_random = 0.0
+radial_accel = 0.0
+radial_accel_random = 0.0
+tangential_accel = 0.0
+tangential_accel_random = 0.0
+damping = 0.0
+damping_random = 0.0
+angle = 0.0
+angle_random = 0.0
+scale = 0.5
+scale_random = 0.0
+scale_curve = SubResource( 26 )
+color_ramp = SubResource( 23 )
+hue_variation = 0.0
+hue_variation_random = 0.0
+anim_speed = 0.0
+anim_speed_random = 0.0
+anim_offset = 0.0
+anim_offset_random = 0.0
+anim_loop = false
+_sections_unfolded = [ "Angle", "Color", "Emission Shape", "Flags", "Gravity", "Initial Velocity", "Scale", "Spread" ]
+
+[sub_resource type="SpatialMaterial" id=22]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = true
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 1
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 4.01, 3, 3.7, 1 )
+albedo_texture = ExtResource( 12 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Flags", "Parameters", "Vertex Color" ]
+
+[sub_resource type="QuadMesh" id=21]
+
+material = SubResource( 22 )
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+size = Vector2( 0.2, 1 )
+
+[sub_resource type="QuadMesh" id=18]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+size = Vector2( 2.688, 2.688 )
+
+[sub_resource type="SpatialMaterial" id=19]
+
+resource_local_to_scene = true
+render_priority = 0
+flags_transparent = false
+flags_unshaded = true
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 1
+params_cull_mode = 2
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 2.1, 1.5, 2.4, 1 )
+albedo_texture = ExtResource( 12 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Flags", "Metallic", "Parameters", "Proximity Fade", "Resource", "Vertex Color" ]
+
+[node name="boss" type="StaticBody" index="0" groups=[
+"boss",
+]]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 3
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="boss_state" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="inactive" type="Node" parent="boss_state" index="0"]
+
+script = ExtResource( 3 )
+
+[node name="starting" type="Node" parent="boss_state" index="1"]
+
+script = ExtResource( 4 )
+
+[node name="timer" type="Timer" parent="boss_state/starting" index="0"]
+
+process_mode = 1
+wait_time = 4.0
+one_shot = false
+autostart = false
+
+[node name="idle" type="Node" parent="boss_state" index="2"]
+
+script = ExtResource( 5 )
+
+[node name="timer" type="Timer" parent="boss_state/idle" index="0"]
+
+process_mode = 1
+wait_time = 4.0
+one_shot = true
+autostart = false
+
+[node name="laser" type="Node" parent="boss_state" index="3"]
+
+script = ExtResource( 6 )
+
+[node name="timer_start" type="Timer" parent="boss_state/laser" index="0"]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = true
+autostart = false
+
+[node name="timer_end" type="Timer" parent="boss_state/laser" index="1"]
+
+process_mode = 1
+wait_time = 12.0
+one_shot = true
+autostart = false
+
+[node name="tumors" type="Node" parent="boss_state" index="4"]
+
+script = ExtResource( 7 )
+
+[node name="timer_spawn" type="Timer" parent="boss_state/tumors" index="0"]
+
+process_mode = 1
+wait_time = 0.1
+one_shot = false
+autostart = false
+
+[node name="timer_end" type="Timer" parent="boss_state/tumors" index="1"]
+
+process_mode = 1
+wait_time = 20.0
+one_shot = false
+autostart = false
+
+[node name="shooting" type="Node" parent="boss_state" index="5"]
+
+script = ExtResource( 8 )
+
+[node name="timer_end" type="Timer" parent="boss_state/shooting" index="0"]
+
+process_mode = 1
+wait_time = 9.0
+one_shot = true
+autostart = false
+
+[node name="timer_shoot" type="Timer" parent="boss_state/shooting" index="1"]
+
+process_mode = 1
+wait_time = 0.1
+one_shot = false
+autostart = false
+
+[node name="dying" type="Node" parent="boss_state" index="6"]
+
+script = ExtResource( 9 )
+
+[node name="timer" type="Timer" parent="boss_state/dying" index="0"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = true
+autostart = false
+
+[node name="CollisionShape" type="CollisionShape" parent="." index="1"]
+
+shape = SubResource( 1 )
+disabled = false
+
+[node name="mesh" type="MeshInstance" parent="." index="2"]
+
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 2 )
+skeleton = NodePath("..")
+material/0 = SubResource( 3 )
+_sections_unfolded = [ "Geometry", "material" ]
+
+[node name="animation" type="AnimationPlayer" parent="." index="3"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/dying = SubResource( 4 )
+anims/laser_end = SubResource( 5 )
+anims/laser_start = SubResource( 6 )
+anims/spawn = SubResource( 7 )
+anims/tumor_end = SubResource( 8 )
+anims/tumor_start = SubResource( 9 )
+blend_times = [  ]
+
+[node name="raycast" type="RayCast" parent="." index="4"]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector3( 0, 0, -100 )
+collision_mask = 2
+
+[node name="ui" type="CanvasLayer" parent="." index="5"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="health" type="Node2D" parent="ui" index="0"]
+
+visible = false
+script = ExtResource( 11 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="bar" type="ProgressBar" parent="ui/health" index="0"]
+
+material = SubResource( 10 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_top = 58.0
+margin_right = -8.0
+margin_bottom = 59.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 0
+custom_styles/fg = SubResource( 11 )
+custom_styles/bg = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
+min_value = 0.0
+max_value = 200.0
+step = 1.0
+page = 0.0
+value = 24.0
+exp_edit = false
+rounded = false
+percent_visible = true
+_sections_unfolded = [ "Anchor", "Margin", "Material", "Percent", "Rect", "Theme", "Visibility", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="tween" type="Tween" parent="ui/health" index="1"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="laser" type="Spatial" parent="." index="6"]
+
+[node name="mesh" type="MeshInstance" parent="laser" index="0"]
+
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, -8 )
+visible = false
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 14 )
+skeleton = NodePath("..")
+material/0 = SubResource( 15 )
+_sections_unfolded = [ "Geometry", "Transform", "Visibility", "material" ]
+
+[node name="hit_effect" type="MeshInstance" parent="laser" index="1"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16 )
+visible = false
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 16 )
+skeleton = NodePath("..")
+material/0 = SubResource( 17 )
+_sections_unfolded = [ "Visibility", "material" ]
+
+[node name="Particles" type="Particles" parent="laser/hit_effect" index="0"]
+
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+emitting = true
+amount = 300
+lifetime = 0.6
+one_shot = false
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_aabb = AABB( -4, -4, -4, 8, 8, 8 )
+local_coords = false
+draw_order = 0
+process_material = SubResource( 20 )
+draw_passes = 1
+draw_pass_1 = SubResource( 21 )
+_sections_unfolded = [ "Draw Passes", "Drawing", "Process Material", "Time" ]
+
+[node name="glow" type="MeshInstance" parent="laser" index="2"]
+
+transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, -4.001 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 18 )
+skeleton = NodePath("..")
+material/0 = SubResource( 19 )
+_sections_unfolded = [ "Transform", "material" ]
+
+[node name="boss_laser_loop" type="AudioStreamPlayer3D" parent="." index="7"]
+
+stream = ExtResource( 13 )
+attenuation_model = 0
+unit_db = 11.0
+unit_size = 1.5
+max_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 0.0
+out_of_range_mode = 0
+bus = "Master"
+area_mask = 1
+emission_angle_enabled = false
+emission_angle_degrees = 45.0
+emission_angle_filter_attenuation_db = -12.0
+attenuation_filter_cutoff_hz = 15000.0
+attenuation_filter_db = -24.0
+doppler_tracking = 0
+_sections_unfolded = [ "Attenuation Filter", "Emission Angle" ]
+
+[connection signal="timeout" from="boss_state/starting/timer" to="boss_state/starting" method="_on_timer_timeout"]
+
+[connection signal="timeout" from="boss_state/idle/timer" to="boss_state/idle" method="_on_timer_timeout"]
+
+[connection signal="timeout" from="boss_state/laser/timer_start" to="boss_state/laser" method="_on_timer_timeout"]
+
+[connection signal="timeout" from="boss_state/laser/timer_end" to="boss_state/laser" method="_on_timer_end_timeout"]
+
+[connection signal="timeout" from="boss_state/tumors/timer_end" to="boss_state/tumors" method="_on_timer_end_timeout"]
+
+[connection signal="timeout" from="boss_state/shooting/timer_shoot" to="boss_state/shooting" method="_on_timer_shoot_timeout"]
+
+[connection signal="timeout" from="boss_state/dying/timer" to="boss_state/dying" method="_on_timer_timeout"]
+
+

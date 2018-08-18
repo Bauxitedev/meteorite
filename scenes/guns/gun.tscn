@@ -1,0 +1,266 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scenes/guns/gun.dae" type="PackedScene" id=1]
+[ext_resource path="res://scripts/guns/gun.gd" type="Script" id=2]
+[ext_resource path="res://scenes/fsm/fsm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/guns/states/holstered.gd" type="Script" id=4]
+[ext_resource path="res://scripts/guns/states/unholstering.gd" type="Script" id=5]
+[ext_resource path="res://scripts/guns/states/unholstered.gd" type="Script" id=6]
+[ext_resource path="res://scripts/guns/states/switching_color.gd" type="Script" id=7]
+[ext_resource path="res://textures/ui/crosshair.png" type="Texture" id=8]
+
+[sub_resource type="SpatialMaterial" id=1]
+
+resource_local_to_scene = true
+resource_name = "mat_glow"
+render_priority = 0
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 0.64, 0.64, 0.64, 1 )
+metallic = 0.5
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.542695
+roughness_texture_channel = 0
+emission_enabled = true
+emission = Color( 0, 0.414062, 1, 1 )
+emission_energy = 2.0
+emission_operator = 0
+emission_on_uv2 = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Emission", "Resource" ]
+
+[sub_resource type="Animation" id=2]
+
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Guns:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 0.175995, 2.70087 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -1 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Guns:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.8 ),
+"transitions": PoolRealArray( 1, 0.186818, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -5, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+
+length = 1.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Guns:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Guns:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.6, 0.8, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -3, 10, 10 ), Vector3( -1, -4, -20 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("gun_state/switching_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "on_switch_finish"
+} ]
+}
+
+[sub_resource type="Animation" id=4]
+
+length = 2.8
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Guns:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -1.3, 0, 0.9, 1.2, 2.79933 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -2, 0 ), Vector3( 0, -0.5, 0 ), Vector3( 0, 0.3, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Guns:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 1.6, 2, 2.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 0, 0 ), Vector3( 5, 0, 0 ), Vector3( -5, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="CanvasItemMaterial" id=5]
+
+render_priority = 0
+blend_mode = 1
+light_mode = 0
+
+[node name="gun" index="0" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="Guns" parent="." index="0"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Gun1" parent="Guns" index="0"]
+
+material/1 = SubResource( 1 )
+_sections_unfolded = [ "Geometry", "Transform" ]
+
+[node name="Gun2" parent="Guns" index="1"]
+
+material/1 = SubResource( 1 )
+_sections_unfolded = [ "Transform", "material" ]
+
+[node name="Gun3" parent="Guns" index="2"]
+
+visible = false
+_sections_unfolded = [ "Transform" ]
+
+[node name="AnimationPlayer" parent="." index="1"]
+
+anims/shoot = SubResource( 2 )
+anims/switch_color = SubResource( 3 )
+anims/unholster = SubResource( 4 )
+
+[node name="timer" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="gun_state" parent="." index="3" instance=ExtResource( 3 )]
+
+[node name="holstered" type="Node" parent="gun_state" index="0"]
+
+script = ExtResource( 4 )
+
+[node name="timer" type="Timer" parent="gun_state/holstered" index="0"]
+
+process_mode = 1
+wait_time = 0.01
+one_shot = true
+autostart = false
+
+[node name="unholstering" type="Node" parent="gun_state" index="1"]
+
+script = ExtResource( 5 )
+
+[node name="unholstered" type="Node" parent="gun_state" index="2"]
+
+script = ExtResource( 6 )
+
+[node name="timer" type="Timer" parent="gun_state/unholstered" index="0"]
+
+process_mode = 1
+wait_time = 0.01
+one_shot = false
+autostart = false
+
+[node name="switching_color" type="Node" parent="gun_state" index="3"]
+
+script = ExtResource( 7 )
+
+[node name="ui" type="CanvasLayer" parent="." index="4"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="crosshair" type="Sprite" parent="ui" index="0"]
+
+modulate = Color( 1, 1, 1, 0.28 )
+material = SubResource( 5 )
+position = Vector2( 32, 32 )
+texture = ExtResource( 8 )
+_sections_unfolded = [ "Material", "Offset", "Transform", "Visibility" ]
+
+[connection signal="timeout" from="gun_state/holstered/timer" to="gun_state/holstered" method="_on_timer_timeout"]
+
+
