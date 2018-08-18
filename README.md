@@ -12,6 +12,8 @@ You can download the game here: https://bauxite.itch.io/meteorite
 
 And you can get the soundtrack here: https://kenophos.bandcamp.com/album/meteorite-soundtrack
 
+Made in Godot 3.0. Will be available on the asset store soon.
+
 # License
 
 # Code
