@@ -13,17 +13,17 @@ onready var laser_hit_effect = $laser/hit_effect
 
 
 func _process(delta):
+
+	boss_state.update(delta)
+	
+func _physics_process(delta):
 	
 	# NOTE this is always needed or the raycast won't be in the right direction
-	
 	var original_basis = global_transform.basis
 	look_at(PlayerData.get_player().global_transform.origin, Vector3(0,1,0))
 	var look_at_basis =  global_transform.basis
 	global_transform.basis = Basis(Quat(original_basis).slerp(Quat(look_at_basis), 0.05))
 	
-	boss_state.update(delta)
-	
-func _physics_process(delta):
 	boss_state.fixed_update(delta)	
 
 func _ready():
