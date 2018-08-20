@@ -18,16 +18,24 @@ And you can get the soundtrack here: https://kenophos.bandcamp.com/album/meteori
 
 Made in Godot 3.0. Will be available on the asset store soon.
 
+# Running the game
+
+**Important:** before running the game, you must download a font (since it cannot be freely distributed). If you don't do this the game will not display any text.
+
+1. Download the font [here](http://www.miniml.com/fonts/uni0553/uni0553.zip).
+2. Copy the `uni0553-webfont.ttf` file from the zip file to the `fonts/` folder.
+
+That's all.
+
 # License
 
-# Code
+## Code
 
 The code (everything in the `scripts` and `materials/shaders` folder) is licensed under the MIT license.
 
-# Assets
+## Assets
 
 ![](https://licensebuttons.net/l/by-sa/4.0/88x31.png)
 
 The assets (everything that is *not* in the `scripts` or `materials/shaders` folder) are licenced under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
 
-The only exception to this is the [font](http://www.miniml.com/fonts/uni0553/index.html).

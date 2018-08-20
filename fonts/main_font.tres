@@ -1,14 +1,12 @@
-[gd_resource type="BitmapFont" load_steps=2 format=2]
+[gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[ext_resource path="res://fonts/bitmap/font.fnt" type="BitmapFont" id=1]
+[ext_resource path="res://fonts/uni0553-webfont.ttf" type="DynamicFontData" id=1]
 
 [resource]
 
-textures = [  ]
-chars = PoolIntArray(  )
-kernings = PoolIntArray(  )
-height = 12.0
-ascent = 9.0
-distance_field = false
-fallback = ExtResource( 1 )
+size = 8
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
