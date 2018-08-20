@@ -39,3 +39,6 @@ The code (everything in the `scripts` and `materials/shaders` folder) is license
 
 The assets (everything that is *not* in the `scripts` or `materials/shaders` folder) are licenced under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
 
+## Font
+
+The font used is [Uni 05_53, made by Craig Kroeger](http://www.miniml.com/fonts/uni0553/index.html). The font is not included in the repo.
