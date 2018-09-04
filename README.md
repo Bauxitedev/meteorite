@@ -12,11 +12,13 @@ You can download the game here: https://bauxite.itch.io/meteorite
 
 And you can get the soundtrack here: https://kenophos.bandcamp.com/album/meteorite-soundtrack
 
+Also available on the asset store: https://godotengine.org/asset-library/asset/257
+
 [Here's a video of a full playthrough of the game.](https://www.youtube.com/watch?v=wwO46Xt0Sf0)
 
 ----
 
-Made in Godot 3.0. Will be available on the asset store soon.
+Made in Godot 3.0. 
 
 # Running the game
 
@@ -26,6 +28,10 @@ Made in Godot 3.0. Will be available on the asset store soon.
 2. Copy the `uni0553-webfont.ttf` file from the zip file to the `fonts/` folder.
 
 That's all.
+
+# Compatibility
+
+The game was developed using Godot 3.0.4. Newer versions of Godot might give trouble (Godot 3.1 alpha is confirmed to be broken)
 
 # License
 
