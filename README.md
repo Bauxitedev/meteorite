@@ -1,5 +1,7 @@
 # Meteorite
 
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W2X7WN)
+
 ![](promo/crop/screenshot0.png)
 
 **Meteorite is a lowres metroidvania FPS, inspired by Metroid Prime, made for LOWREZJAM 2018.** Explore a facility on a far away planet, find gun upgrades, and upgrade your movement capabilities to surpass previously unsurmountable obstacles.
