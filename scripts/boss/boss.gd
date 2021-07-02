@@ -39,8 +39,6 @@ func hurt(amount, color):
 		boss_state.switch_state("dying")
 
 
-func _on_boss_wake_up_trigger_body_entered(body):
-	# TODO although the signal is in oneshot mode, ensure you can't do this after saving after boss death
-	if body.is_in_group("player"):
-		boss_state.switch_state("starting")
-		body.stop_showing_boss_warning()
+func wake_up():
+	boss_state.switch_state("starting")
+

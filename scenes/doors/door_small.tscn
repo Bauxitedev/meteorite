@@ -74,7 +74,7 @@ bullet_color = 0
 material/0 = SubResource( 1 )
 _sections_unfolded = [ "material" ]
 
-[node name="col" parent="doorL" index="0" groups=[
+[node name="static_collision" parent="doorL" index="0" groups=[
 "door_half",
 ]]
 
@@ -89,7 +89,7 @@ move_to_pos = Vector3( -0.7, 0, 0 )
 material/0 = SubResource( 1 )
 _sections_unfolded = [ "material" ]
 
-[node name="col" parent="doorR" index="0" groups=[
+[node name="static_collision" parent="doorR" index="0" groups=[
 "door_half",
 ]]
 

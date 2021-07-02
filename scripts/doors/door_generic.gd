@@ -34,7 +34,7 @@ func _ready():
 	for door in doors:
 		var door_name = door.name
 		initial_positions[door_name] = door.translation
-		target_positions[door_name] = door.get_node("col").move_to_pos
+		target_positions[door_name] = door.get_node("static_collision").move_to_pos
 		
 	
 func set_doormat_tex(tex):
@@ -80,11 +80,6 @@ func close():
 	tween.start()
 	
 	timer.stop()
-
-func _on_boss_wake_up_trigger_body_entered(body):
-	if body.is_in_group("player") && !body.boss_defeated:
-		close()
-		lock()
 		
 func lock():
 	is_locked = true
