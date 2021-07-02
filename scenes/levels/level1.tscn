@@ -40,12 +40,12 @@ extents = Vector3( 1, 8, 12 )
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="col" parent="BossArena" index="0"]
+[node name="static_collision" parent="BossArena" index="0"]
 
 collision_layer = 3
 _sections_unfolded = [ "Collision" ]
 
-[node name="col" parent="BossArenaFillings" index="0"]
+[node name="static_collision" parent="BossArenaFillings" index="0"]
 
 collision_layer = 3
 _sections_unfolded = [ "Collision" ]
@@ -338,7 +338,7 @@ bounds = Vector3( 24, 1.5, 24 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 9.5, -0.5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="col" parent="BossArenaPlatform" index="0"]
+[node name="static_collision" parent="BossArenaPlatform" index="0"]
 
 collision_layer = 0
 collision_mask = 2
@@ -350,7 +350,7 @@ editor/display_folded = true
 cast_shadow = 2
 _sections_unfolded = [ "Geometry", "Transform" ]
 
-[node name="col" parent="Level" index="0"]
+[node name="static_collision" parent="Level" index="0"]
 
 collision_layer = 3
 _sections_unfolded = [ "Collision" ]

@@ -34,7 +34,7 @@ func _ready():
 	for door in doors:
 		var door_name = door.name
 		initial_positions[door_name] = door.translation
-		target_positions[door_name] = door.get_node("col").move_to_pos
+		target_positions[door_name] = door.get_node("static_collision").move_to_pos
 		
 	
 func set_doormat_tex(tex):
