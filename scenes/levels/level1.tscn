@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/levels/level1.dae" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scenes/enemies/turret.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/environmental/lava.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/boss/boss.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scripts/triggers/trigger_wake_up_boss.gd" type="Script" id=12]
 
 [sub_resource type="GIProbeData" id=1]
 bounds = AABB( -60, -40, -46, 120, 80, 92 )
@@ -246,6 +247,7 @@ input_ray_pickable = false
 angular_damp = 1.0
 collision_layer = 0
 collision_mask = 2
+script = ExtResource( 12 )
 
 [node name="shape" type="CollisionShape" parent="boss/boss_wake_up_trigger" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
@@ -255,7 +257,10 @@ shape = SubResource( 3 )
 collision_mask = 3
 
 [connection signal="saved" from="save_stations/save_station_boss" to="player" method="_on_save_station_boss_saved"]
-[connection signal="body_entered" from="boss/boss_wake_up_trigger" to="doors/door_small_boss" method="_on_boss_wake_up_trigger_body_entered" flags=6]
-[connection signal="body_entered" from="boss/boss_wake_up_trigger" to="boss/boss" method="_on_boss_wake_up_trigger_body_entered" flags=6]
+[connection signal="body_entered" from="boss/boss_wake_up_trigger" to="boss/boss_wake_up_trigger" method="_on_body_enter"]
+[connection signal="wake_up_boss" from="boss/boss_wake_up_trigger" to="player" method="stop_showing_boss_warning" flags=6]
+[connection signal="wake_up_boss" from="boss/boss_wake_up_trigger" to="doors/door_small_boss" method="lock" flags=6]
+[connection signal="wake_up_boss" from="boss/boss_wake_up_trigger" to="doors/door_small_boss" method="close" flags=6]
+[connection signal="wake_up_boss" from="boss/boss_wake_up_trigger" to="boss/boss" method="wake_up" flags=6]
 
 [editable path="trigger_hurt"]

@@ -80,11 +80,6 @@ func close():
 	tween.start()
 	
 	timer.stop()
-
-func _on_boss_wake_up_trigger_body_entered(body):
-	if body.is_in_group("player") && !body.boss_defeated:
-		close()
-		lock()
 		
 func lock():
 	is_locked = true
