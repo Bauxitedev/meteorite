@@ -16,7 +16,7 @@ bullet_color = 0
 
 _sections_unfolded = [ "material" ]
 
-[node name="col" parent="doorL" index="0" groups=[
+[node name="static_collision" parent="doorL" index="0" groups=[
 "door_half",
 ]]
 
@@ -26,7 +26,7 @@ _sections_unfolded = [ "Collision" ]
 parent_door = NodePath("../..")
 move_to_pos = Vector3( -1.1, 0, 0 )
 
-[node name="col" parent="doorR" index="0" groups=[
+[node name="static_collision" parent="doorR" index="0" groups=[
 "door_half",
 ]]
 
